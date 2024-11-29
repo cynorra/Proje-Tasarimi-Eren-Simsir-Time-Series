@@ -41,6 +41,7 @@ import os
 from statsmodels.tsa.seasonal import seasonal_decompose
 
 from scipy.stats import ttest_1samp, jarque_bera
+from arch import arch_model
 
 
 with open("C:/Users/erens/OneDrive/Masaüstü/banalysis/evdsapi.txt") as dosya:
@@ -618,8 +619,28 @@ n = jarque_bera(veri["Rassal"]) # normal dagilima uymamasını bekliyoruz..
 # SignificanceResult(statistic=1076.5207353062297, pvalue=1.723822325527858e-234)
 # normal dagilim yok
 # seri duragan
-# arch ile modelleyecegiz
 
 
 
+#### ARCH ile modelleyecegiz
 
+p_val = range(1,5) # 5 i kapsamayacagi icin max 4 gecikme
+q_val = range(1,5)
+o_val = range(0,2)
+
+dag = ["ged","normal","studentst","skewt"]
+model = ["GARCH","EGARCH"]
+
+sonuc = pd.DataFrame(columns=["p","o","q","Model","Dağılım","Aic"])
+
+for p in p_val:
+    for q in q_val:
+        for o in o_val:
+            for d in dag:
+                for m in model:
+                    modelarch = arch_model(veri["Rassal"],p=p,o=o,q=q,vol=m,dist=d,mean="Zero").fit(disp="off")
+                    sonuc = sonuc._append({"p":p,"o":o,"q":q,"Model":m,"Dağılım":d,"Aic":modelarch.aic},ignore_index=True)
+
+sonuc = sonuc.sort_values(by="Aic")
+
+print(sonuc)
