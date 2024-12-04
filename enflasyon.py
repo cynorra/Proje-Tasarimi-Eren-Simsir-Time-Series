@@ -643,4 +643,88 @@ for p in p_val:
 
 sonuc = sonuc.sort_values(by="Aic")
 
-print(sonuc)
+# print(sonuc)
+
+'''
+
+p  o  q   Model Dağılım         Aic
+14   1  1  1   GARCH   skewt  381.491804
+30   1  1  2   GARCH   skewt  383.491803
+78   2  1  1   GARCH   skewt  383.491804
+142  3  1  1   GARCH   skewt  385.491803
+46   1  1  3   GARCH   skewt  385.491803
+..  .. .. ..     ...     ...         ...
+114  2  0  4   GARCH  normal  413.718610
+35   1  0  3  EGARCH  normal  414.308609
+99   2  0  3  EGARCH  normal  415.158920
+51   1  0  4  EGARCH  normal  416.308608
+115  2  0  4  EGARCH  normal  417.158921
+
+'''
+# model-1 en düsük AIC değerli;
+
+modelarch = arch_model(veri["Rassal"],p=1,o=1,q=1,vol="GARCH",dist="skewt",mean="Zero").fit(disp="off")
+# print(modelarch)
+# ortalaması zaten sıfır
+
+# arch etkisi kontrol 
+h = het_arch(modelarch.std_resid, nlags=1)[1]
+print(h)
+# 0.859623524612982 -> H0 kabul arch etkisi yok.
+
+plt.plot(veri["Rassal"])
+plt.plot(modelarch.conditional_volatility) # aykırı değerleri ne kadar tahmin edebiliyoruz?
+
+# ### OZET ####
+# Mevsimsellik -> Deterministik
+# Trend -> Arima ile modellenecek
+
+
+
+
+# ##### Rolling Window - Kayan Yapı
+test_sayısı = len(enf_test)
+vol_tahmin = [] # volatility olmadigi icin.
+
+for i in range(test_sayısı):
+    train = enfay["Enf"][:-(test_sayısı-i)]
+    modelarch = arch_model(train, p=1, o=1, q=1, vol="GARCH", dist="skewt", mean="Zero")
+    model_arch = modelarch.fit(disp="off")
+    tahmin = model_arch.forecast(horizon=1) # horizon -> kaç adım sonrasını tahmin edecek??
+    vol_tahmin.append(np.sqrt(tahmin.variance.values[-1,:][0])) # Array Yapısından çıkarmak için ekstradan [0] parametresi ekledik.
+
+
+
+# ## Trend Tahmin
+model_trend = auto_arima(veri["Trend"],seasonal=False, trace=False)
+tahmin_trend = model_trend.predict(test_sayısı)
+
+tahmin_mev = veri["Mevsimsellik"].iloc[-(test_sayısı):]
+# print(tahmin_mev)
+
+
+# # sonuc - toplamsal model
+plt.figure()
+son = tahmin_trend + tahmin_mev.values
+enf_test["Tahmin"] = son
+
+plt.ylim(top=13)
+plt.plot(enf_train["Enf"], label = "Train")
+plt.plot(enf_test["Enf"], label="Test")
+plt.plot(enf_test["Tahmin"], label="Tahmin")
+plt.legend()
+plt.show()
+
+
+
+# şokları (volatility) tahmin edemiyor.
+# eklersek (volatility degerlerini)
+plt.figure()
+son = tahmin_trend + tahmin_mev.values + vol_tahmin
+enf_test["Tahmin"] = son
+plt.ylim(top=13)
+plt.plot(enf_train["Enf"], label = "Train")
+plt.plot(enf_test["Enf"], label="Test")
+plt.plot(enf_test["Tahmin"], label="Tahmin")
+plt.legend()
+plt.show()
