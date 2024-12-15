@@ -223,6 +223,19 @@ print(tufe_train)
 
 # - - - -
 
+# GUNCELLEME 15.12.24
+
+# Dağılım görselleştirme
+fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+sns.histplot(tufe["TUFE"], kde=True, ax=ax[0])
+ax[0].set_title("Box-Cox Öncesi Dağılım")
+sns.histplot(tufe_train["Box-Cox"], kde=True, ax=ax[1])
+ax[1].set_title("Box-Cox Sonrası Dağılım")
+plt.tight_layout()
+plt.show()
+
+## GUNCELLEME SONU
+
 tufe_train["Aylar"] = tufe_train.index.month
 dummy=pd.get_dummies(tufe_train["Aylar"],prefix="Aylar",dtype=int,drop_first=False) #kukla degiskenlere çevrilerek regresyon modeli olusturulur. Aylar degeri 2 ise Aylar_2 gibi sutun degiskeni olusturur. Kolaylik saglar.
 tufe_train=pd.concat([tufe_train,dummy],axis=1)
