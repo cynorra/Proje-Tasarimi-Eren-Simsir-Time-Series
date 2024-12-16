@@ -1,0 +1,12 @@
+https://evds2.tcmb.gov.tr/index.php?/evds/portlet/lrcsQFWXtqo%3D/tr
+
+aşağıda seri açıklamaları kısmında her serinin kodu var evds apide kullanmak icin
+
+ornek veri cekme
+
+api = "5Nca6TRSIR"
+    
+evds = ev.evdsAPI(api)
+
+dolar = evds.get_data(["TP.DK.USD.A.YTL"], startdate="01-01-2003",enddate="01-02-2025",frequency=5)
+dolar.rename(columns={"TP.DK.USD.A.YTL":"Dolar(TL)"},inplace=True)
