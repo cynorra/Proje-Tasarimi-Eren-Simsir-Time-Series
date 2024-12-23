@@ -1,0 +1,17 @@
+PYTHON İLE ZAMAN SERİSİ ANALİZİNDE KULLANILAN TUFE VERİLERİ TÜRKİYE CUMHURİYETİ MERKEZ BANKASININ VERİLERİNDEN CANLI OLARAK EVDS API İLE ALINMAKTADIR. API KEY'I KLASORDE VE KOD ICERISINDE MEVCUTTUR. PROJE TASARIM ŞABLONUNDA KULLANILAN BILGILERIN KAYNAKLARI DA AŞAĞIDA MEVCUTTUR.
+
+# VERI SETI: https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Istatistikler/Enflasyon+Verileri/Tuketici+Fiyatlari
+# EVDS API kullanilmistir
+
+
+
+Box, G. E. P. & Jenkins, G. M. (1976). Time Series Analysis: Forecasting and Control. San Francisco: Holden-Day.
+Dhamija, Y. & Dhamija, Y. (2017). Volatility Modelling in Financial Markets using GARCH Models. Procedia Computer Science, 122, pp. 80–87.
+Engle, R. F. (1982). Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation. Econometrica, 50(4), pp. 987–1007.
+Enders, W. (2014). Applied Econometric Time Series (4th ed.). Wiley.
+Hyndman, R. J. (2020). Measuring Forecast Accuracy. Available at: https://robjhyndman.com/hyndsight/forecast-accuracy.
+Hyndman, R. J. & Athanasopoulos, G. (2021). Forecasting: Principles and Practice (3rd ed.). OTexts.
+Python Software Foundation (2024). Python Libraries for Data Analysis and Visualization
+Ruptures Library Documentation (2024). Ruptures: Change Point Detection in Python. Available at: https://centre-borelli.github.io/ruptures-docs
+Türkiye Cumhuriyet Merkez Bankası (TCMB). (2024). EVDS Veri Seti. Available at: https://evds2.tcmb.gov.tr
+Brockwell, P. J. & Davis, R. A. (2016). Introduction to Time Series and Forecasting (3rd ed.). Springer 

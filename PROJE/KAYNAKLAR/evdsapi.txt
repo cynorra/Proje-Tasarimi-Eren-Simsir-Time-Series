@@ -1,0 +1,4 @@
+5Nca6TRSIR
+
+# VERI SETI: https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB+TR/Main+Menu/Istatistikler/Enflasyon+Verileri/Tuketici+Fiyatlari
+# EVDS API kullanilmistir
